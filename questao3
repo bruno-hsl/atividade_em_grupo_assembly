@@ -1,0 +1,65 @@
+.data
+tabuada: .asciiz "Tabuada de "
+imprimex: .asciiz " x "
+imprimeigual: .asciiz " = "
+pulalinha: .asciiz "\n"
+
+.text
+.globl main
+
+main:
+    li $t0, 1
+
+multiplicador:
+    li $v0, 4
+    la $a0, tabuada
+    syscall
+
+    move $a0, $t0
+    li $v0, 1
+    syscall
+
+    li $v0, 4
+    la $a0, pulalinha
+    syscall
+
+    li $t1, 1 
+multiplicando:
+    move $a0, $t0
+    li $v0, 1
+    syscall
+
+    li $v0, 4
+    la $a0, imprimex
+    syscall
+
+    move $a0, $t1
+    li $v0, 1
+    syscall
+
+    li $v0, 4
+    la $a0, imprimeigual
+    syscall
+
+#funcao multiplicar
+    jal multiplicar
+
+    li $v0, 4
+    la $a0, pulalinha
+    syscall
+
+    addi $t1, $t1, 1
+    bne $t1, 11, multiplicando
+
+    addi $t0, $t0, 1
+    bne $t0, 11, multiplicador
+    
+sair:
+    li $v0, 10
+    syscall
+    
+multiplicar:
+    mul $a0, $t0, $t1 
+    li $v0, 1
+    syscall
+    jr $ra

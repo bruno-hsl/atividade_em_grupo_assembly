@@ -1,0 +1,66 @@
+.data
+digite1: .asciiz "digite um numero: "
+digite2: .asciiz "digite outro numero: "
+
+.text 
+main:   
+    li $v0, 4
+    la $a0, digite1
+    syscall
+
+    li $v0, 5
+    syscall
+
+    move $t0, $v0
+
+    li $v0, 4
+    la $a0, digite2
+    syscall
+
+    li $v0, 5
+    syscall
+
+    move $t1, $v0
+
+    blt $t0, $t1, imprime12
+    bgt $t0, $t1, imprime21
+    beq $t0, $t1, imprimeIgual
+
+imprime12:
+    li $v0, 1
+    move $a0, $t0
+    syscall
+
+    li $v0, 11
+    li $a0, ' '
+    syscall
+
+    li $v0, 1
+    move $a0, $t1
+    syscall
+
+    j sair
+
+imprime21:
+    li $v0, 1
+    move $a0, $t1
+    syscall
+
+    li $v0, 11
+    li $a0, ' '
+    syscall
+
+    li $v0, 1
+    move $a0, $t0
+    syscall
+    
+    j sair
+    
+imprimeIgual:
+    li $v0, 1
+    move $a0, $t0
+    syscall
+
+sair:
+    li $v0, 10
+    syscall
